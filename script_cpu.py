@@ -12,7 +12,7 @@ import numpy as np
 batch_size = 12 # how many independent sequences will process in parallel ?
 block_size = 64 # max input lenght for prediction
 max_iters = 2000
-eval_interval = 20
+eval_interval = 100
 learning_rate = 1e-3
 device = 'cpu' # device='cuda' if you want to run with GPU
 eval_iters = 20
@@ -312,7 +312,7 @@ for iter in range(max_iters):
 # Optimization with device = 'cuda'
 context = torch.zeros((1,1), dtype=torch.long, device=device) #(B=1,T=1)
 
-# Generate 500 tokens
+# Generate <max_new_tokens> tokens
 # Works on level of batches
 # we then have to index into the zero throw to unplug the single batch dimension
 # Give a time steps = one dimensional array of all the indices convert in list and decode
