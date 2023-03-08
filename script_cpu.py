@@ -28,9 +28,6 @@ dropout = 0.0 # network too small
 
 torch.manual_seed(2023)
 
-# https://www.tensorflow.org/datasets/catalog/wikipedia?hl=fr
-!wget https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
-
 # Get Data
 with open('input.txt', 'r', encoding='UTF-8') as f:
     text = f.read()
