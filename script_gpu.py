@@ -31,9 +31,9 @@ n_head = 12
 n_layer = 12
 dropout = 0.2
 # DDP settings
-backend = 'nccl' # 'nccl', 'gloo', etc.
+backend = 'nccl'
 # system
-device = 'cuda' # examples: 'cpu', 'cuda', 'cuda:0', 'cuda:1' etc., or try 'mps' on macbooks
+device = 'cuda'
 dtype = 'float16'
 
 # ---------------
@@ -44,20 +44,14 @@ ddp_rank = int(os.environ['RANK'])
 ddp_local_rank = int(os.environ['LOCAL_RANK'])
 device = f'cuda:{ddp_local_rank}'
 torch.cuda.set_device(device)
-master_process = ddp_rank == 0 # this process will do logging, checkpointing etc.
-seed_offset = ddp_rank # each process gets a different seed
 
-#
+
 torch.manual_seed(2023)
 
-torch.backends.cuda.matmul.allow_tf32 = True # allow tf32 on matmul
-torch.backends.cudnn.allow_tf32 = True # allow tf32 on cudnn
-device_type = 'cuda'# for later use in torch.autocast
-# note: float16 data type will automatically use a GradScaler
-ptdtype = {'float32': torch.float32, 'bfloat16': torch.bfloat16, 'float16': torch.float16}[dtype]
+device_type = 'cuda'
+ptdtype = {'float16': torch.float16}[dtype]
 ctx = nullcontext() if device_type == 'cpu' else torch.amp.autocast(device_type=device_type, dtype=ptdtype)
 
-#!wget https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
 with open('input.txt', 'r', encoding='UTF-8') as f:
     text = f.read()
     
