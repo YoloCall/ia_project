@@ -1,5 +1,3 @@
-# pip install transformers torch numpy datasets wandb tqdm
-
 # Decoder only transformer : generating text
 
 import torch
